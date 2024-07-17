@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="assets/css/launcher.css">
+    </head>
+    <body class="hide">
+        <div class="dragbar"></div>
+        <div class="frame">
+            <div id="minimize" class="button-frame icon-minimize"></div>
+            <div id="maximize" class="button-frame icon-maximize"></div>
+            <div id="close" class="button-frame icon-close"></div>
+        </div>
+        <div class="console"></div>
+        <div class="console-log-counter"></div>
+        <div class="console-clear-btn"></div>
+        <div class="preload-content">
+            <div class="preload-progress">
+                <span class="dot"></span>
+                <div class="dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="preload-title">Lancement de luminaria en cours...</div>
+        </div>
+
+        <div class="panels"></div>
+        <script src="assets/js/launcher.js" type="module"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const consoleElement = document.querySelector('.console');
+                if (consoleElement) {
+                    consoleElement.style.display = 'none';
+                }
+                const consoleBtn = document.querySelector('.console-clear-btn');
+                if (consoleBtn) {
+                    consoleBtn.style.display = 'none';
+                }
+            });
+        </script>
+    </body>
+</html>
