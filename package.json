@@ -1,7 +1,7 @@
 {
     "name": "luminaria",
     "preductname": "Luminaria Launcher",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Launcher de Luminaria",
     "main": "src/app.js",
     "author": "Boulldogo/Riptiaz",
