@@ -341,6 +341,7 @@ body {
     background: #292929;
 }
 
+.mods-container-empty,
 .mods-container {
     margin-top: 15px;
     font-size: 15px;
@@ -356,6 +357,10 @@ body {
     font: normal normal normal 16px/25px Poppins;
     color: #F1F1F1;
     box-sizing: border-box;
+}
+
+.mods-container-empty {
+    text-align: center;
 }
 
 .mods-container-text {

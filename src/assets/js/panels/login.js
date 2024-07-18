@@ -8,9 +8,9 @@
 import { database, changePanel, addAccount, accountSelect } from '../utils.js';
 const fetch = require('node-fetch');
 const { AZauth } = require('minecraft-java-core-azbetter');
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const pkg = require('../package.json');
-const url = "https://historion.wstr.fr";
+const url = "https://luminaria-mc.fr";
 
 class Login {
     
@@ -33,6 +33,16 @@ class Login {
     }
 
     getOffline() {
+        document.querySelectorAll('.login-mojang-input').forEach(input => {
+            input.style.color = 'black';
+            input.style.backgroundColor = 'white';
+            input.style.border = '1px solid #ccc';
+            input.style.zIndex = '10';
+            input.style.position = 'relative';
+            input.style.opacity = '1';
+        });
+
+        
         console.log(`Initializing microsoft Panel...`)
         console.log(`Initializing mojang Panel...`)
         console.log(`Initializing offline Panel...`)
@@ -123,17 +133,26 @@ class Login {
         let newuserurl = `${azauth}/user/register`
         this.newuser = document.querySelector(".new-user");
         this.newuser.innerHTML="Pas de compte ?"
-        this.newuser.setAttribute ("href", newuserurl)
+
+        this.newuser.addEventListener("click",  () => {
+            shell.openExternal(newuserurl);
+        })
 
         let passwordreseturl = `${azauth}/user/password/reset`
         this.passwordreset = document.querySelector(".password-reset");
         this.passwordreset.innerHTML="Mot de passe oublié ?"
-        this.passwordreset.setAttribute ("href", passwordreseturl)
+
+        this.passwordreset.addEventListener("click",  () => {
+            shell.openExternal(passwordreseturl);
+        })
 
         let emailverifyurl = `${azauth}/profile`
         this.emailverifyurl = document.querySelector(".email_invalid");
         this.emailverifyurl.innerHTML="Email non vérifiée ?"
-        this.emailverifyurl.setAttribute ("href", emailverifyurl)
+
+        this.emailverifyurl.addEventListener("click",  () => {
+            shell.openExternal(emailverifyurl);
+        })
 
         mojangBtn.addEventListener("click", () => {
             document.querySelector(".login-card").style.display = "none";

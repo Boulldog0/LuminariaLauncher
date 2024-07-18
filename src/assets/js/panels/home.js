@@ -13,7 +13,7 @@ const launch = new Launch();
 const pkg = require('../package.json');
 const axios = require('axios');
 const crypto = require('crypto');
-const websiteUrl = 'https://historion.wstr.fr';
+const websiteUrl = 'https://luminaria-mc.fr';
 const dataDirectory = process.env.APPDATA || (process.platform == 'darwin' ? `${process.env.HOME}/Library/Application Support` : process.env.HOME)
 
 class Home {
@@ -27,9 +27,8 @@ class Home {
         this.initLaunch();
         this.initStatusServer();
         this.initBtn();
-        this.initInfos();
         this.initAdvert();
-        this.initVideo();
+        this.initDetails();
     }
 
     async initNews() {
@@ -94,15 +93,6 @@ class Home {
         if(!this.config.server_img) {
             serverimg.style.display = "none";
         }
-    }
-
-    
-    async initInfos() {
-        let uuid = (await this.database.get('1234', 'accounts-selected')).value;
-        let account = (await this.database.get(uuid.selected, 'accounts')).value;
-    
-        const blockName = document.querySelector('.player-name');
-        blockName.innerHTML = `${account.name}`;
     }
 
     async initAdvert() {
@@ -173,7 +163,7 @@ class Home {
                 }
     
                 let opts = {
-                    url: `https://launcher.historion.wstr.fr/panel/data`,
+                    url: `https://lch.luminaria-mc.fr/panel/data`,
                     authenticator: account,
                     timeout: 15000,
                     path: `${dataDirectory}/${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}`,
@@ -264,9 +254,22 @@ class Home {
         })
     }  
 
-    async initVideo() {
+    //Init de la vidéoe communautaire, du playername (page home) et du rendu du skin page settings
+    async initDetails() {
+        let uuid = (await this.database.get('1234', 'accounts-selected')).value;
+        let account = (await this.database.get(uuid.selected, 'accounts')).value;
         const response = await fetch('https://launcher.historion.wstr.fr/api/video.json');
         const data = await response.json();
+
+        const blockName = document.querySelector('.player-name');
+        blockName.innerHTML = `${account.name}`;
+                  
+        let title = document.querySelector('.player-skin-title');
+        title.innerHTML = `Skin de ${account.name}`;
+
+        const skin = document.querySelector('.skin-renderer-settings');
+        const url = `https://minerender.org/embed/skin/?skin.url=${websiteUrl}/api/skin-api/skins/${account.name}&amp;autoResize=true&amp;shadow=true&amp;camera.position=-15,35,20&amp;controls.pan=false&amp;controls.zoom=false&amp;controls.enabled=false&amp;utm_source=mineskin&amp;utm_medium=website&amp;utm_campaign=skin_gen_url`
+        skin.src = url;
 
         const youtubeVideoId = data.video_id;
         const youtubeThumbnailUrl = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;

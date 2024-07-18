@@ -25,7 +25,6 @@ class Settings {
         this.initAccount();
         this.initRam();
         this.initLauncherSettings();
-        this.initSkin();
         this.updateModsConfig();
         this.initOptionalMods();
     }
@@ -67,8 +66,8 @@ class Settings {
     }
 
     async updateModsConfig() {
-        const modsDir = path.join(dataDirectory, '.historion', 'mods');
-        const launcherConfigDir = path.join(dataDirectory, '.historion', 'launcher_config');
+        const modsDir = path.join(dataDirectory, '.luminaria', 'mods');
+        const launcherConfigDir = path.join(dataDirectory, '.luminaria', 'launcher_config');
         const modsConfigFile = path.join(launcherConfigDir, 'mods_config.json');
     
         const response = await fetch('https://launcher.historion.wstr.fr/api/mods.json');
@@ -109,24 +108,30 @@ class Settings {
 
     async initOptionalMods() {
         const modElement = document.createElement('div');
-        const modsDir = path.join(dataDirectory, '.historion', 'mods');
-        const launcherConfigDir = path.join(dataDirectory, '.historion', 'launcher_config');
+        const modsDir = path.join(dataDirectory, '.luminaria', 'mods');
+        const launcherConfigDir = path.join(dataDirectory, '.luminaria', 'launcher_config');
         const modsConfigFile = path.join(launcherConfigDir, 'mods_config.json');
         const modsListElement = document.getElementById('mods-list');
-
+    
+        if (!fs.existsSync(launcherConfigDir)) {
+            fs.mkdirSync(launcherConfigDir, { recursive: true });
+        }
+    
         if (!fs.existsSync(modsDir) || fs.readdirSync(modsDir).length === 0) {
             modElement.innerHTML = `
-            <div class="mods-container">
-              <h2>Les mods n'ont pas encore étés téléchargés. Veuillez lancer une première fois le jeu pour configurer les mods optionnels.<h2>
-            </div>`
-            if (!fs.existsSync(launcherConfigDir)) {
-                fs.mkdirSync(launcherConfigDir, { recursive: true });
+            <div class="mods-container-empty">
+              <h2>⚠️ Les mods optionnels n'ont pas encore étés téléchargés. Veuillez lancer une première fois le jeu pour pouvoir les configurer. ⚠️<h2>
+            </div>`;
+            modsListElement.appendChild(modElement);
+    
+            if (!fs.existsSync(modsConfigFile)) {
+                await this.createModsConfig(modsConfigFile);
             }
-            await this.createModsConfig(modsConfigFile);
         } else {
             await this.displayMods(modsConfigFile, modsDir, modsListElement);
         }
     }
+    
 
     async createModsConfig(modsConfigFile) {
         const response = await fetch('https://launcher.historion.wstr.fr/api/mods.json');
@@ -304,18 +309,6 @@ class Settings {
                 this.database.update({ uuid: "1234", args: args }, 'java-args');
             }
         });
-    }
-  
-    async initSkin() {
-        let uuid = (await this.database.get('1234', 'accounts-selected')).value;
-        let account = (await this.database.get(uuid.selected, 'accounts')).value;
-
-        let title = document.querySelector('.player-skin-title');
-        title.innerHTML = `Skin de ${account.name}`;
-
-        const skin = document.querySelector('.skin-renderer-settings');
-        const url = `https://minerender.org/embed/skin/?skin.url=${websiteUrl}/api/skin-api/skins/${account.name}&amp;autoResize=true&amp;shadow=true&amp;camera.position=-15,35,20&amp;controls.pan=false&amp;controls.zoom=false&amp;controls.enabled=false&amp;utm_source=mineskin&amp;utm_medium=website&amp;utm_campaign=skin_gen_url`
-        skin.src = url;
     }
 
     async selectFile() {

@@ -60,41 +60,22 @@ class Logger {
         });
 
         if (logContainers.length > 0) {
-            const lines = message.split('\n');
-            if (lines.length > 1 || message.length > 120) {
-                const expandableLog = document.createElement('details');
-                expandableLog.style.marginBottom = '5px';
-                const summary = document.createElement('summary');
-                summary.textContent = `[${this.name}]: ${lines[0]}`;
-                summary.style.color = color;
-                expandableLog.appendChild(summary);
+            const logMessage = document.createElement('div');
+            logMessage.style.color = color;
+            logMessage.style.marginBottom = '5px';
+            logMessage.textContent = `[${this.name}]: ${message}`;
 
-                const logText = document.createElement('pre');
-                logText.textContent = message;
-                expandableLog.appendChild(logText);
-
-                logContainers.forEach(container => {
-                    container.appendChild(expandableLog.cloneNode(true));
-                    container.scrollTop = container.scrollHeight;
-                });
-            } else {
-                const logMessage = document.createElement('div');
-                logMessage.style.color = color;
-                logMessage.style.marginBottom = '5px';
-                logMessage.textContent = `[${this.name}]: ${message}`;
-
-                logContainers.forEach(container => {
-                    container.appendChild(logMessage.cloneNode(true));
-                    container.scrollTop = container.scrollHeight;
-                });
-            }
+            logContainers.forEach(container => {
+                container.appendChild(logMessage.cloneNode(true));
+                container.scrollTop = container.scrollHeight;
+            });
 
             const clearBtn = document.querySelectorAll('.console-clear-btn');
             clearBtn.forEach(clearBtn => {
                 clearBtn.addEventListener('click', () => {
                     this.clearLogs();
                 });
-            })
+            });
         }
     }
 

@@ -1,11 +1,11 @@
 {
     "name": "luminaria",
     "preductname": "Luminaria Launcher",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "description": "Launcher de Luminaria",
     "main": "src/app.js",
     "author": "Boulldogo/Riptiaz",
-    "settings": "https://launcher.historion.wstr.fr/panel",
+    "settings": "https://lch.luminaria-mc.fr",
     "engines": {
         "node": "16.x.x"
     },
