@@ -163,7 +163,7 @@ class Home {
                 }
     
                 let opts = {
-                    url: `https://lch.luminaria-mc.fr/panel/data`,
+                    url: `https://lch.luminaria-mc.fr/data`,
                     authenticator: account,
                     timeout: 15000,
                     path: `${dataDirectory}/${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}`,
