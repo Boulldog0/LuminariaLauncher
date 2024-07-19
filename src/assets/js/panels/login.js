@@ -301,15 +301,15 @@ class Login {
                     return
                 }
                 
-                if (!account_connect.user_info.verified) {
-                    cancelMojangBtn.disabled = false;
-                    loginBtn.disabled = false;
-                    mailInput.disabled = false;
-                    passwordInput.disabled = false;
-                    infoLogin.style.display = "block";
-                    infoLogin.innerHTML = '⚠️ Erreur ⚠️ :<br>Votre adresse email n\'est pas vérifiée. <br>Merci de la vérifier avant de pouvoir vous connecter.'
-                    return
-                }
+                //if (!account_connect.user_info.verified) {
+                //    cancelMojangBtn.disabled = false;
+                //    loginBtn.disabled = false;
+                //    mailInput.disabled = false;
+                //    passwordInput.disabled = false;
+                //    infoLogin.style.display = "block";
+                //    infoLogin.innerHTML = '⚠️ Erreur ⚠️ :<br>Votre adresse email n\'est pas vérifiée. <br>Merci de la vérifier avant de pouvoir vous connecter.'
+                //    return
+                //}
                
                 if (account_connect.reason === 'user_banned') {
                     cancelMojangBtn.disabled = false;

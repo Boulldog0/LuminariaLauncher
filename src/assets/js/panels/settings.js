@@ -477,7 +477,7 @@ class Settings {
     
         document.getElementById("github").addEventListener("click", function() {
             shell.openExternal("https://github.com/Boulldog0/LuminariaLauncher");
-        });
+        });     
     }
 
     async initSettingsDefault() {
